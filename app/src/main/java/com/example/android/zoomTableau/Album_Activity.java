@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.dao.DatabaseHelper;
 import com.example.android.javaBeans.Album;
 import com.example.android.javaBeans.Picture;
 
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Album_Activity extends AppCompatActivity {
+
+    static Album album;
 
     TextView albumName;
     List<Picture> pictures;
@@ -33,6 +36,12 @@ public class Album_Activity extends AppCompatActivity {
     RecyclerView myrv;
     RecyclerViewPicturesAdapter mAdapter;
 
+    DatabaseHelper mDatabaseHelper;
+
+    public static Album getAlbum() {
+        return album;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +49,14 @@ public class Album_Activity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Album album = (Album) intent.getExtras().getSerializable("albumData");
+        album = (Album) intent.getExtras().getSerializable("albumData");
 
-        albumName = (TextView) findViewById(R.id.album_name_bar);
-        albumName.setText(album.getName());
+        albumName = findViewById(R.id.album_name_bar);
+        albumName.setText(album.getName() + " id:" +album.getId());
 
-        pictures = new ArrayList<>();
 
-        myrv = (RecyclerView) findViewById(R.id.recyclerview_pictures_id);
-        mAdapter = new RecyclerViewPicturesAdapter(this, pictures);
+        myrv = findViewById(R.id.recyclerview_pictures_id);
+        mAdapter = new RecyclerViewPicturesAdapter(this, album.getId());
 
         myrv.setLayoutManager(new GridLayoutManager(this, 2));
         myrv.setAdapter(mAdapter);
@@ -56,7 +64,9 @@ public class Album_Activity extends AppCompatActivity {
         Album_Activity.this.overridePendingTransition(0,0);
 
     }
-    public void removeAlbum(View v) {}
+    public void removeAlbum(View v) {
+        mDatabaseHelper.rmAlbum(album.getId());
+    }
 
 
     public void openGallery(View v) {
@@ -72,7 +82,7 @@ public class Album_Activity extends AppCompatActivity {
             imgUri = data.getData();
             try{
                 imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
-                mAdapter.addPicture(imgBitmap, imgUri);
+                mAdapter.addPicture(imgBitmap, imgUri, album.getId());
             }catch(IOException e) {e.printStackTrace();}
         }
     }

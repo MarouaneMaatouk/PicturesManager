@@ -13,8 +13,8 @@ public class Album  implements Serializable {
     public Album() {
     }
 
-    public Album(int icon, String name) {
-        this.icon = icon;
+    public Album(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 

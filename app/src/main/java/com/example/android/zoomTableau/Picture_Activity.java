@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.android.javaBeans.Album;
 import com.example.android.javaBeans.Picture;
 
 import org.opencv.android.Utils;
@@ -22,8 +24,10 @@ import java.util.List;
 
 public class Picture_Activity extends AppCompatActivity {
     Picture img;
+    Album album;
     ImageView imgView;
-    Bitmap imgBitmap,enhancedBitmap;
+    TextView albumName;
+    Bitmap imgBitmap, enhancedBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,15 @@ public class Picture_Activity extends AppCompatActivity {
         Intent intent = getIntent();
 
         img = (Picture) intent.getExtras().getSerializable("pictureData");
+        album = Album_Activity.getAlbum();
+
+        albumName = findViewById(R.id.album_name_bar);
+        albumName.setText(album.getName());
 
         String imgUriStr = img.getImgUriStr();
         Uri imgUri = Uri.parse(imgUriStr);
         imgView =  findViewById(R.id.pictureView);
+
         try{
             imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
             imgView.setImageBitmap(imgBitmap);
@@ -45,6 +54,8 @@ public class Picture_Activity extends AppCompatActivity {
         Picture_Activity.this.overridePendingTransition(0,0);
     }
 
+
+    //Equalization of the histogram
     public void enhanceQuality(View v) {
 
         Mat rgba = new Mat();

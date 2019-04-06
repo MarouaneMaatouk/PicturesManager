@@ -1,28 +1,18 @@
+
 package com.example.android.zoomTableau;
 
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.annotation.Nullable;
+
+import com.example.android.dao.DatabaseHelper;
+import com.example.android.javaBeans.Album;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageView;
 
-import com.example.android.dao.DatabaseHelper;
-import com.example.android.javaBeans.Album;
+
 
 import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +20,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity  {
 
     List<Album> albums;
-
-    ImageView imageView;
-
-    Uri imgUri;
-    Bitmap imgBitmap,enhancedBitmap;
 
     RecyclerView myrv;
 
@@ -45,24 +30,17 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        albums = new ArrayList<>();
-        albums.add(new Album(R.drawable.add, "add"));
-
-        myrv = (RecyclerView) findViewById(R.id.recyclerview_albums_id);
-        RecyclerViewAlbumsAdapter mAdapter = new RecyclerViewAlbumsAdapter(this, albums);
-
+        myrv = findViewById(R.id.recyclerview_albums_id);
+        RecyclerViewAlbumsAdapter mAdapter = new RecyclerViewAlbumsAdapter(this);
         myrv.setLayoutManager(new GridLayoutManager(this, 3));
         myrv.setAdapter(mAdapter);
 
-        mDatabaseHelper = new DatabaseHelper(this);
-
-        //imageView = (ImageView) findViewById(R.id.imageView);
         OpenCVLoader.initDebug();
         MainActivity.this.overridePendingTransition(0,0);
     }
 
 
-
+/*
     public void openGallery(View v) {
         Intent myIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
@@ -107,11 +85,11 @@ public class MainActivity extends AppCompatActivity  {
         */
 
         //Imgproc.adaptiveThreshold(rgba, grayMat,255.0, Imgproc.ADAPTIVE_THRESH_MEAN_C,Imgproc.THRESH_BINARY ,15,40);
-
+        /*
         Utils.matToBitmap(rgba, enhancedBitmap);
 
         imageView.setImageBitmap(enhancedBitmap);
 
     }
-
+    */
 }

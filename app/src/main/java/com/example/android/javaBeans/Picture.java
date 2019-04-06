@@ -18,15 +18,27 @@ public class Picture implements Serializable {
     private String imgUriStr = "";
     private String mediaUriStr;
 
+    public Picture(int id,  String description, int album_id, String imgUriStr, String mediaUriStr) {
+        this.id = id;
+        this.album_id = album_id;
+        this.description = description;
+        this.imgUriStr = imgUriStr;
+        this.mediaUriStr = mediaUriStr;
+    }
+    public Picture(String description, int album_id, String imgUriStr, String mediaUriStr) {
 
-    public Picture(int picture) {
-        this.picture = picture;
+        this.album_id = album_id;
+        this.description = description;
+        this.imgUriStr = imgUriStr;
+        this.mediaUriStr = mediaUriStr;
     }
 
-    public Picture(Bitmap imgBitmap, Uri imgUri) {
+
+    public Picture(Bitmap imgBitmap, Uri imgUri, int album_id) {
         this.imgBitmap = imgBitmap;
         this.imgUri = imgUri;
         this.imgUriStr = imgUri.toString();
+        this.album_id = album_id;
     }
 
 

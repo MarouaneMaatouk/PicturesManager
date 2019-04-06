@@ -16,8 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.dao.DatabaseHelper;
 import com.example.android.javaBeans.Album;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerViewAlbumsAdapter.MyViewHolder> {
@@ -26,10 +28,21 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
     private List<Album> albumsData;
 
     private String popup_Text;
+    private DatabaseHelper mDatabaseHelper;
 
-    public RecyclerViewAlbumsAdapter(Context mContext, List<Album> albumsData) {
+    public RecyclerViewAlbumsAdapter(Context mContext) {
         this.mContext = mContext;
-        this.albumsData = albumsData;
+
+        this.albumsData = new ArrayList<>();
+
+        this.mDatabaseHelper = new DatabaseHelper(mContext);
+
+        albumsData.add(new Album(R.drawable.add, "add"));
+
+        //Load the albums from the db
+        mDatabaseHelper = new DatabaseHelper(mContext);
+        albumsData.addAll(mDatabaseHelper.getAlbumData());
+
     }
 
 
@@ -47,7 +60,7 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int i) {
         myViewHolder.album_name.setText(albumsData.get(i).getName());
-        myViewHolder.album_icon.setImageResource(albumsData.get(i).getIcon());
+        myViewHolder.album_icon.setImageResource(R.drawable.folder);
 
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +84,8 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
                             if(popup_Text.equals("") || popup_Text == null) return;
 
                             albumsData.add(new Album(R.drawable.folder, popup_Text));
+                            //Adding to the db
+                            mDatabaseHelper.addNewAlbum(popup_Text);
 
                             Toast.makeText(mContext,popup_Text + " est crée !",Toast.LENGTH_LONG).show();
                         }
@@ -86,6 +101,7 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
                 }
                 else {
                     intent.putExtra("albumData", albumsData.get(i));
+                    Album_Activity.album = albumsData.get(i);
                     mContext.startActivity(intent);
                 }
 
@@ -106,9 +122,9 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
         public MyViewHolder(View v) {
             super(v);
 
-            album_name = (TextView) v.findViewById(R.id.folder_id);
-            album_icon = (ImageView) v.findViewById(R.id.folder_img_id);
-            cardView = (CardView) v.findViewById(R.id.cardview_id);
+            album_name = v.findViewById(R.id.folder_id);
+            album_icon = v.findViewById(R.id.folder_img_id);
+            cardView = v.findViewById(R.id.cardview_id);
 
 
         }
