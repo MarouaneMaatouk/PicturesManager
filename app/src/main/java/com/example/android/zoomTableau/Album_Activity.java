@@ -64,6 +64,16 @@ public class Album_Activity extends AppCompatActivity {
         Album_Activity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
+        return;
+    }
+
+
     public void removeAlbum(View v) {
         mDatabaseHelper.rmAlbum(album.getId());
         Intent intent = new Intent(this, MainActivity.class);

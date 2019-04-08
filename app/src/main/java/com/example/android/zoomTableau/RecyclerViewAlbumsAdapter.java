@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,7 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
                             if(popup_Text.equals("") || popup_Text == null) return;
 
                             albumsData.add(new Album( mDatabaseHelper.getLastAlbumId() + 1,popup_Text));
+                            Log.d("Adding Album",popup_Text +" id: "+ Integer.toString(mDatabaseHelper.getLastAlbumId() + 1));
                             //Adding to the db
                             mDatabaseHelper.addNewAlbum(popup_Text);
 

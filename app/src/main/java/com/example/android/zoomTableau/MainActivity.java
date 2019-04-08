@@ -5,6 +5,9 @@ package com.example.android.zoomTableau;
 
 import com.example.android.dao.DatabaseHelper;
 import com.example.android.javaBeans.Album;
+
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -36,6 +39,41 @@ public class MainActivity extends AppCompatActivity  {
         OpenCVLoader.initDebug();
         MainActivity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Display alert message when back button has been pressed
+        backButtonHandler();
+        return;
+    }
+
+    public void backButtonHandler() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                MainActivity.this);
+        // Setting Dialog Title
+        alertDialog.setTitle("Leave application?");
+        // Setting Dialog Message
+        alertDialog.setMessage("Are you sure you want to leave the application?");
+        // Setting Icon to Dialog
+        alertDialog.setIcon(R.drawable.background_icon);
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to invoke NO event
+                        dialog.cancel();
+                    }
+                });
+        // Showing Alert Message
+        alertDialog.show();
     }
 
 

@@ -124,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT MAX(ID) FROM " + ALBUM_TABLE;
         Cursor data = db.rawQuery(query, null);
-        while(data.moveToNext()) {
+        if(data.moveToLast()) {
             id = data.getInt(0);
         }
 

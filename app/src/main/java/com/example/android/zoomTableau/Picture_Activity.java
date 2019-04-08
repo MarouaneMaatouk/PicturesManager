@@ -60,6 +60,12 @@ public class Picture_Activity extends AppCompatActivity {
         Picture_Activity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Album_Activity.class);
+        this.startActivity(intent);
+        return;
+    }
 
 
 
