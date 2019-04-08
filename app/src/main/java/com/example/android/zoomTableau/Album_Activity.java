@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.dao.DatabaseHelper;
 import com.example.android.javaBeans.Album;
@@ -26,9 +27,6 @@ public class Album_Activity extends AppCompatActivity {
     static Album album;
 
     TextView albumName;
-    List<Picture> pictures;
-
-    ImageView imageView;
 
     Uri imgUri;
     Bitmap imgBitmap;
@@ -47,12 +45,14 @@ public class Album_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
 
-        Intent intent = getIntent();
+        mDatabaseHelper = new DatabaseHelper(this);
 
-        album = (Album) intent.getExtras().getSerializable("albumData");
+        Intent intent = getIntent();
+        if(album == null)
+            album = (Album) intent.getExtras().getSerializable("albumData");
 
         albumName = findViewById(R.id.album_name_bar);
-        albumName.setText(album.getName() + " id:" +album.getId());
+        albumName.setText(album.getName());
 
 
         myrv = findViewById(R.id.recyclerview_pictures_id);
@@ -61,11 +61,14 @@ public class Album_Activity extends AppCompatActivity {
         myrv.setLayoutManager(new GridLayoutManager(this, 2));
         myrv.setAdapter(mAdapter);
 
-        Album_Activity.this.overridePendingTransition(0,0);
+        Album_Activity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
     }
     public void removeAlbum(View v) {
         mDatabaseHelper.rmAlbum(album.getId());
+        Intent intent = new Intent(this, MainActivity.class);
+        Toast.makeText(this, album.getName() + " a été suprimée", Toast.LENGTH_SHORT).show();
+        this.startActivity(intent);
     }
 
 

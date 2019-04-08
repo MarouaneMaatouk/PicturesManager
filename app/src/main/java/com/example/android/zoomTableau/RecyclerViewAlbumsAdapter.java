@@ -83,7 +83,7 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
                             popup_Text = input.getText().toString();
                             if(popup_Text.equals("") || popup_Text == null) return;
 
-                            albumsData.add(new Album(R.drawable.folder, popup_Text));
+                            albumsData.add(new Album( mDatabaseHelper.getLastAlbumId() + 1,popup_Text));
                             //Adding to the db
                             mDatabaseHelper.addNewAlbum(popup_Text);
 

@@ -15,7 +15,7 @@ public class Picture implements Serializable {
     private int picture;
     private transient Bitmap imgBitmap;
     private transient Uri imgUri;
-    private String imgUriStr = "";
+    private String imgUriStr;
     private String mediaUriStr;
 
     public Picture(int id,  String description, int album_id, String imgUriStr, String mediaUriStr) {
@@ -41,6 +41,13 @@ public class Picture implements Serializable {
         this.album_id = album_id;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setDescription(String description) {
         this.description = description;

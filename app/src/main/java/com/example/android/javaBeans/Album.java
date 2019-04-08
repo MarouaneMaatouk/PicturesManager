@@ -1,17 +1,17 @@
 package com.example.android.javaBeans;
 
+import com.example.android.zoomTableau.R;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class Album  implements Serializable {
 
     private int id;
-    private int icon;
     private String name;
     private List<Picture> pictures;
 
-    public Album() {
-    }
+    public Album() {}
 
     public Album(int id, String name) {
         this.id = id;
@@ -27,16 +27,8 @@ public class Album  implements Serializable {
         this.id = id;
     }
 
-    public void setIcon(int icon) {
-        this.icon = icon;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getIcon() {
-        return icon;
     }
 
     public String getName() {
@@ -48,7 +40,6 @@ public class Album  implements Serializable {
     public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
     }
-
 
 
 }

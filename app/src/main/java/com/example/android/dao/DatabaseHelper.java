@@ -32,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public DatabaseHelper(Context context) {
-        super(context, ALBUM_TABLE, null, 1);
+        super(context, "DB", null, 1);
     }
 
     @Override
@@ -44,7 +44,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 PIC_COL1 + " TEXT, " +
                 PIC_COL2 + " INTEGER, " +
                 PIC_COL3 + " TEXT, " +
-                PIC_COL4 + " TEXT)";
+                PIC_COL4 + " TEXT, " +
+                "FOREIGN KEY ("+ PIC_COL2  +") REFERENCES "+ ALBUM_TABLE +"(ID) ON DELETE CASCADE)";
         sqLiteDatabase.execSQL(createAlbumTable);
         sqLiteDatabase.execSQL(createPictureTable);
     }
@@ -83,8 +84,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + ALBUM_TABLE + " WHERE "
                 + AL_COL0 + " = '" + id + "'" ;
-        Log.d(TAG, "deleteName: query: " + query);
-        Log.d(TAG, "deleteName: Deleting an album from database.");
+        Log.d(TAG, "delete query: " + query);
+        Log.d(TAG, "Deleting an album from database.");
         db.execSQL(query);
 
     }
@@ -108,9 +109,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     )
             );
         }
+        data.close();
 
         return dataLs;
 
+    }
+
+    /**
+     * Get all the last album's id in the db
+     * @return id
+     * */
+    public int getLastAlbumId() {
+        int id = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT MAX(ID) FROM " + ALBUM_TABLE;
+        Cursor data = db.rawQuery(query, null);
+        while(data.moveToNext()) {
+            id = data.getInt(0);
+        }
+
+        data.close();
+
+        return id;
     }
 
 
@@ -135,14 +155,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(PICTURE_TABLE, null, contentValues);
     }
 
+
     /**
      * Remove an album by id
      * @param id album's id
      * */
     public void rmPicture(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + ALBUM_TABLE + " WHERE "
-                + PIC_COL0 + " = '" + id + "'";
+        String query = "DELETE FROM " + PICTURE_TABLE + " WHERE "
+                + PIC_COL0 + " = " + id ;
         Log.d(TAG, "deleteName: query: " + query);
         Log.d(TAG, "deleteName: Deleting a picture from database.");
         db.execSQL(query);
@@ -162,16 +183,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while(data.moveToNext()) {
             dataLs.add(
                     new Picture(
-                                data.getInt(0),
-                                data.getString(1),
-                                data.getInt(2),
-                                data.getString(3),
-                                data.getString(4)
+                            data.getInt(0),
+                            data.getString(1),
+                            data.getInt(2),
+                            data.getString(3),
+                            data.getString(4)
                     )
             );
         }
+        data.close();
 
         return dataLs;
     }
+
+    /**
+     * Get all the last pictures's id in the db
+     * @return id
+     * */
+    public int getLastPictureId() {
+        int id = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT MAX("+ PIC_COL0 +") FROM " + PICTURE_TABLE;
+
+        Cursor data = db.rawQuery(query, null);
+        while(data.moveToNext()) {
+            id = data.getInt(0);
+        }
+        data.close();
+
+        return id;
+    }
+
 
 }

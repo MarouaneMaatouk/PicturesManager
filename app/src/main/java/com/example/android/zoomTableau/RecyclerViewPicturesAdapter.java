@@ -26,7 +26,6 @@ public class RecyclerViewPicturesAdapter extends RecyclerView.Adapter<RecyclerVi
     private DatabaseHelper mDatabaseHelper;
 
 
-
     public RecyclerViewPicturesAdapter(Context mContext , int album_id) {
         this.mContext = mContext;
         this.picturesData = new ArrayList<>();
@@ -41,6 +40,7 @@ public class RecyclerViewPicturesAdapter extends RecyclerView.Adapter<RecyclerVi
     public void addPicture(Bitmap imgBitmap, Uri uri, int album_id) {
 
         Picture newPicture = new Picture(imgBitmap,uri,album_id );
+        newPicture.setId(mDatabaseHelper.getLastPictureId() + 1);
         picturesData.add(newPicture);
         mDatabaseHelper.addNewPicture(newPicture);
     }

@@ -19,24 +19,23 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity  {
 
-    List<Album> albums;
-
     RecyclerView myrv;
 
-    DatabaseHelper mDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        myrv = null;
         myrv = findViewById(R.id.recyclerview_albums_id);
         RecyclerViewAlbumsAdapter mAdapter = new RecyclerViewAlbumsAdapter(this);
         myrv.setLayoutManager(new GridLayoutManager(this, 3));
         myrv.setAdapter(mAdapter);
 
         OpenCVLoader.initDebug();
-        MainActivity.this.overridePendingTransition(0,0);
+        MainActivity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
     }
 
 

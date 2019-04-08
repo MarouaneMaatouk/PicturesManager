@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.android.dao.DatabaseHelper;
 import com.example.android.javaBeans.Album;
 import com.example.android.javaBeans.Picture;
 
@@ -29,10 +31,14 @@ public class Picture_Activity extends AppCompatActivity {
     TextView albumName;
     Bitmap imgBitmap, enhancedBitmap;
 
+    DatabaseHelper mDatabaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture);
+
+        mDatabaseHelper = new DatabaseHelper(this);
 
         Intent intent = getIntent();
 
@@ -51,9 +57,19 @@ public class Picture_Activity extends AppCompatActivity {
             imgView.setImageBitmap(imgBitmap);
         }catch(IOException e) {e.printStackTrace();}
 
-        Picture_Activity.this.overridePendingTransition(0,0);
+        Picture_Activity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
     }
 
+
+
+    public void removePicture(View v) {
+        mDatabaseHelper.rmPicture(img.getId());
+        Intent intent = new Intent(this, Album_Activity.class);
+        //intent.putExtra("imgIdForRemoval",img.getId());
+        Toast.makeText(this, "L'image a été suprimée", Toast.LENGTH_SHORT).show();
+        this.startActivity(intent);
+    }
 
     //Equalization of the histogram
     public void enhanceQuality(View v) {
