@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
     android:fitsSystemWindows="true"
-    android:layout_marginBottom="0dp"
     tools:context=".Album_Activity"
     >
 
@@ -16,10 +15,9 @@
         android:id="@+id/main.appbar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginBottom="0dp"
         android:fitsSystemWindows="true"
-        android:paddingBottom="0dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="4dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/main.collapsing"
@@ -29,13 +27,13 @@
             app:contentScrim="?attr/colorPrimary"
 
             app:layout_scrollFlags="enterAlways"
-            app:titleEnabled="false"
-            tools:layout_marginBottom="0dp">
+            app:titleEnabled="false">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/main.toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -67,7 +65,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="openGallery"
-                    android:src="@drawable/add" />
+                    android:src="@drawable/addr" />
 
                 <ImageView
                     android:id="@+id/remove_album_id"
@@ -77,13 +75,13 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="-9dp"
+                    android:layout_marginTop="-10dp"
                     android:layout_marginEnd="2dp"
                     android:layout_marginRight="2dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="removeAlbum"
-                    android:src="@drawable/remove"
+                    android:src="@drawable/remover"
 
 
                     />
@@ -98,11 +96,9 @@
         android:id="@+id/recyclerview_pictures_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="0dp"
-        android:layout_marginTop="0dp"
-
         android:layout_gravity="center"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
 
     </android.support.v7.widget.RecyclerView>
 
