@@ -36,18 +36,9 @@
         </activity>
 
         <activity
-            android:name=".Album_Activity"
-            android:parentActivityName="com.example.android.zoomTableau.MainActivity" >
-            <!-- The meta-data element is needed for versions lower than 4.1 -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.zoomTableau.MainActivity" />
+            android:name=".Album_Activity">
         </activity>
-        <activity android:name=".Picture_Activity"
-            android:parentActivityName="com.example.android.zoomTableau.Album_Activity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.zoomTableau.Album_Activity" />
+        <activity android:name=".Picture_Activity">
         </activity>
     </application>
 

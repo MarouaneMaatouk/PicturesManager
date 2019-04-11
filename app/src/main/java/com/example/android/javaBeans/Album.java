@@ -11,7 +11,7 @@ public class Album  implements Serializable {
     private String name;
     private List<Picture> pictures;
 
-    public Album() {}
+    public Album(String name) {this.name = name;}
 
     public Album(int id, String name) {
         this.id = id;

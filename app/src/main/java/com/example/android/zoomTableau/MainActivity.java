@@ -62,13 +62,13 @@ public class MainActivity extends AppCompatActivity  {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
+                        //System.exit(0);
                     }
                 });
         // Setting Negative "NO" Button
         alertDialog.setNegativeButton("NO",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to invoke NO event
                         dialog.cancel();
                     }
                 });

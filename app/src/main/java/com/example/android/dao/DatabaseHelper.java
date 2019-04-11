@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void rmAlbum(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + ALBUM_TABLE + " WHERE "
-                + AL_COL0 + " = '" + id + "'" ;
+                + AL_COL0 + " = " + id + "" ;
         Log.d(TAG, "delete query: " + query);
         Log.d(TAG, "Deleting an album from database.");
         db.execSQL(query);
@@ -124,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT MAX(ID) FROM " + ALBUM_TABLE;
         Cursor data = db.rawQuery(query, null);
-        if(data.moveToLast()) {
+        while(data.moveToNext()) {
             id = data.getInt(0);
         }
 

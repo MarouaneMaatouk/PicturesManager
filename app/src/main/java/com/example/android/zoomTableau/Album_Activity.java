@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -69,16 +70,20 @@ public class Album_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         this.startActivity(intent);
         return;
     }
 
 
     public void removeAlbum(View v) {
+        Log.d("ID", ""+ album.getId());
         mDatabaseHelper.rmAlbum(album.getId());
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Toast.makeText(this, album.getName() + " a été suprimée", Toast.LENGTH_SHORT).show();
         this.startActivity(intent);
+
     }
 
 

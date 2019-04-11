@@ -63,6 +63,7 @@ public class Picture_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, Album_Activity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         this.startActivity(intent);
         return;
     }
@@ -72,7 +73,7 @@ public class Picture_Activity extends AppCompatActivity {
     public void removePicture(View v) {
         mDatabaseHelper.rmPicture(img.getId());
         Intent intent = new Intent(this, Album_Activity.class);
-        //intent.putExtra("imgIdForRemoval",img.getId());
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Toast.makeText(this, "L'image a été suprimée", Toast.LENGTH_SHORT).show();
         this.startActivity(intent);
     }

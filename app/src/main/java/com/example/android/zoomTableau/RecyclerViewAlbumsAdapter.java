@@ -84,10 +84,14 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
                             popup_Text = input.getText().toString();
                             if(popup_Text.equals("") || popup_Text == null) return;
 
-                            albumsData.add(new Album( mDatabaseHelper.getLastAlbumId() + 1,popup_Text));
+                            Album album = (new Album(popup_Text));
                             Log.d("Adding Album",popup_Text +" id: "+ Integer.toString(mDatabaseHelper.getLastAlbumId() + 1));
                             //Adding to the db
                             mDatabaseHelper.addNewAlbum(popup_Text);
+                            //getAlbumId returns 0 if the table is cleaned, but last id is autoincrement > 0
+                            //Solution: Set album id after insert in db
+                            album.setId(mDatabaseHelper.getLastAlbumId());
+                            albumsData.add(album);
 
                             Toast.makeText(mContext,popup_Text + " est crée !",Toast.LENGTH_LONG).show();
                         }
