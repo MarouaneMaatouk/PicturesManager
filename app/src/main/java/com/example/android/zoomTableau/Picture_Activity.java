@@ -4,14 +4,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.dao.DatabaseHelper;
+import com.example.android.dbManager.DatabaseHelper;
 import com.example.android.javaBeans.Album;
 import com.example.android.javaBeans.Picture;
 
@@ -68,6 +72,33 @@ public class Picture_Activity extends AppCompatActivity {
         return;
     }
 
+    public void addComment(View v) {
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.custom_dialog, null);
+
+        final EditText editText = (EditText) dialogView.findViewById(R.id.edt_comment);
+
+        Button save = (Button) dialogView.findViewById(R.id.saveButton);
+        Button cancel = (Button) dialogView.findViewById(R.id.cancelButton);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogBuilder.dismiss();
+            }
+        });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // DO SOMETHINGS
+                dialogBuilder.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.show();
+    }
 
 
     public void removePicture(View v) {

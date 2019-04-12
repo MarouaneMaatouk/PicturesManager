@@ -11,17 +11,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.dao.DatabaseHelper;
+import com.example.android.dbManager.DatabaseHelper;
 import com.example.android.javaBeans.Album;
-import com.example.android.javaBeans.Picture;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Album_Activity extends AppCompatActivity {
 

@@ -3,9 +3,6 @@ package com.example.android.zoomTableau;
 
 
 
-import com.example.android.dao.DatabaseHelper;
-import com.example.android.javaBeans.Album;
-
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +13,6 @@ import android.support.v7.widget.RecyclerView;
 
 
 import org.opencv.android.OpenCVLoader;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity  {

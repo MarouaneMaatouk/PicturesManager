@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.dao.DatabaseHelper;
+import com.example.android.dbManager.DatabaseHelper;
 import com.example.android.javaBeans.Album;
 
 import java.util.ArrayList;

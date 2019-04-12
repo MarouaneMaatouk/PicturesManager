@@ -82,7 +82,7 @@
                     android:focusable="true"
                     android:onClick="removeAlbum"
                     android:src="@drawable/remover"
-
+                    android:layout_alignRight="@+id/add_picture_id"
 
                     />
 

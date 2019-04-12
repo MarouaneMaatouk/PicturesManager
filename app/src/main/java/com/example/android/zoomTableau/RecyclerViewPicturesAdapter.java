@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.android.dao.DatabaseHelper;
+import com.example.android.dbManager.DatabaseHelper;
 import com.example.android.javaBeans.Picture;
 
 import java.io.IOException;
@@ -40,9 +40,10 @@ public class RecyclerViewPicturesAdapter extends RecyclerView.Adapter<RecyclerVi
     public void addPicture(Bitmap imgBitmap, Uri uri, int album_id) {
 
         Picture newPicture = new Picture(imgBitmap,uri,album_id );
-        newPicture.setId(mDatabaseHelper.getLastPictureId() + 1);
-        picturesData.add(newPicture);
         mDatabaseHelper.addNewPicture(newPicture);
+        newPicture.setId(mDatabaseHelper.getLastPictureId());
+        picturesData.add(newPicture);
+
     }
 
     @NonNull
