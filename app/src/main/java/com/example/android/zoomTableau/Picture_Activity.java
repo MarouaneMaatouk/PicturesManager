@@ -75,9 +75,10 @@ public class Picture_Activity extends AppCompatActivity {
     public void addComment(View v) {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
         LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.custom_dialog, null);
+        View dialogView = inflater.inflate(R.layout.description_dialog, null);
 
         final EditText editText = (EditText) dialogView.findViewById(R.id.edt_comment);
+        editText.setText(img.getDescription());
 
         Button save = (Button) dialogView.findViewById(R.id.saveButton);
         Button cancel = (Button) dialogView.findViewById(R.id.cancelButton);
@@ -91,7 +92,9 @@ public class Picture_Activity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // DO SOMETHINGS
+                String newDescription = editText.getText().toString();
+                img.setDescription(newDescription);
+                mDatabaseHelper.updateComment(img.getId(),newDescription);
                 dialogBuilder.dismiss();
             }
         });

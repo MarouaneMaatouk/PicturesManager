@@ -163,8 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + PICTURE_TABLE + " WHERE "
                 + PIC_COL0 + " = " + id ;
-        Log.d(TAG, "deleteName: query: " + query);
-        Log.d(TAG, "deleteName: Deleting a picture from database.");
+        Log.d(TAG, "deleting a picture: query: " + query);
         db.execSQL(query);
     }
 
@@ -191,6 +190,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             );
         }
         data.close();
+        Log.d(TAG, "Fetching the pictures inside the album: " + query);
 
         return dataLs;
     }
@@ -210,7 +210,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         data.close();
 
+        Log.d(TAG, "Fetching the last id in the picture table: " + query);
+
         return id;
+    }
+
+    /**
+     * Updates somme picture's comment
+     * @param id picture's id
+     * @param comment the new comment of the picture
+     */
+    public void updateComment(int id, String comment) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + PICTURE_TABLE + " SET " + PIC_COL1 + " = '" + comment + "'" +
+                       " WHERE " + PIC_COL0 + " = " + id;
+
+        Log.d(TAG, "UPDATE inserting a comment: " + query);
+        db.execSQL(query);
     }
 
 
