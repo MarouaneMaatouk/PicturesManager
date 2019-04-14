@@ -3,7 +3,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:id="@+id/description_dialog"
+    >
 
     <TextView
         android:id="@+id/textView"
@@ -42,31 +44,39 @@
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="47dp"
-        android:layout_marginLeft="47dp"
-        android:layout_marginTop="239dp"
+
+        android:layout_below="@+id/edt_comment"
+
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="16dp"
+
+        android:layout_marginEnd="109dp"
+        android:layout_marginRight="109dp"
         android:layout_marginBottom="5dp"
         android:background="#DC143C"
         android:text="Save"
-        android:textColor="@android:color/white"
-        />
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/saveButton"
+
+        android:layout_below="@+id/edt_comment"
         android:layout_alignParentEnd="true"
+
         android:layout_alignParentRight="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="54dp"
-        android:layout_marginRight="54dp"
+        android:layout_marginTop="16dp"
+
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
         android:layout_marginBottom="5dp"
-        android:textColor="@android:color/white"
+        android:layout_toLeftOf="@+id/saveButton"
         android:background="#DC143C"
         android:text="Cancel"
-        android:layout_alignRight="@+id/saveButton"
+        android:textColor="@android:color/white"
 
         />
 

@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +29,7 @@ import org.opencv.imgproc.Imgproc;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Picture_Activity extends AppCompatActivity {
     Picture img;
@@ -36,6 +39,8 @@ public class Picture_Activity extends AppCompatActivity {
     Bitmap imgBitmap, enhancedBitmap;
 
     DatabaseHelper mDatabaseHelper;
+
+    TextToSpeech mTTs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +108,26 @@ public class Picture_Activity extends AppCompatActivity {
         dialogBuilder.show();
     }
 
+    public void readComment(View v) {
+        final String description = img.getDescription();
+        mTTs = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i == TextToSpeech.SUCCESS) {
+                    int result = mTTs.setLanguage(Locale.FRENCH);
+                    if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language not supported");
+                    }
+                    else {
+                        Log.d("mTTs", "speaking " + description);
+                        mTTs.speak(description, TextToSpeech.QUEUE_FLUSH, null);
+                    }
+                }
+                else Log.e("TTS" , "Init failed");
+            }
+        });
+
+    }
 
     public void removePicture(View v) {
         mDatabaseHelper.rmPicture(img.getId());
