@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.android.dbManager.DatabaseHelper;
 import com.example.android.javaBeans.Album;
 import com.example.android.javaBeans.Picture;
@@ -40,7 +41,8 @@ public class Picture_Activity extends AppCompatActivity {
 
     DatabaseHelper mDatabaseHelper;
 
-    TextToSpeech mTTs;
+    TTS mTTs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class Picture_Activity extends AppCompatActivity {
             imgView.setImageBitmap(imgBitmap);
         }catch(IOException e) {e.printStackTrace();}
 
+        mTTs = TTS.getTTSinstance(this);
+
         Picture_Activity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
     }
@@ -76,6 +80,31 @@ public class Picture_Activity extends AppCompatActivity {
         this.startActivity(intent);
         return;
     }
+    /*
+    public void initmTTs() {
+
+        mTTs = new TextToSpeech(this , new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i == TextToSpeech.SUCCESS) {
+                    int result = mTTs.setLanguage(Locale.FRENCH);
+                    if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Language not supported");
+                        mTTsLoaded = false;
+                    }
+                    else {
+                        mTTsLoaded = true;
+                        Log.d("mTTs", "Successfully loaded");
+                    }
+                }
+                else {
+                    Log.e("TTS" , "Init failed");
+                    mTTsLoaded = false;
+                }
+            }
+        });
+
+    }*/
 
     public void addComment(View v) {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
@@ -110,23 +139,19 @@ public class Picture_Activity extends AppCompatActivity {
 
     public void readComment(View v) {
         final String description = img.getDescription();
-        mTTs = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if(i == TextToSpeech.SUCCESS) {
-                    int result = mTTs.setLanguage(Locale.FRENCH);
-                    if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        Log.e("TTS", "Language not supported");
-                    }
-                    else {
-                        Log.d("mTTs", "speaking " + description);
-                        mTTs.speak(description, TextToSpeech.QUEUE_FLUSH, null);
-                    }
-                }
-                else Log.e("TTS" , "Init failed");
-            }
-        });
+        Log.d("mTTs", "null ?"+ (mTTs == null));
+        mTTs.readText(description);
 
+        /*
+
+        if(mTTsLoaded) {
+            if(description == null) Picture_Activity.mTTs.speak("Aucune description disponible", TextToSpeech.QUEUE_FLUSH, null);
+            else Picture_Activity.mTTs.speak(description, TextToSpeech.QUEUE_FLUSH, null);
+            Log.d("mTTs", "Reading description: " + description + " " + (mTTs == null));
+
+            while(mTTs.isSpeaking());
+
+        }*/
     }
 
     public void removePicture(View v) {
@@ -159,8 +184,8 @@ public class Picture_Activity extends AppCompatActivity {
 
 
         Utils.matToBitmap(rgba, enhancedBitmap);
-
-        imgView.setImageBitmap(enhancedBitmap);
+        Glide.with(this).load(enhancedBitmap).into(imgView);
+        //imgView.setImageBitmap(enhancedBitmap);
 
     }
 }

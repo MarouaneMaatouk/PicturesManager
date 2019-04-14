@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.dbManager.DatabaseHelper;
 import com.example.android.javaBeans.Picture;
 
@@ -60,14 +61,17 @@ public class RecyclerViewPicturesAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int i) {
         Bitmap imgBitmap = picturesData.get(i).getImgBitmap();
         if(imgBitmap != null) {
-            myViewHolder.picture.setImageBitmap(imgBitmap);
+            Glide.with(mContext).load(imgBitmap).into(myViewHolder.picture);
+            //myViewHolder.picture.setImageBitmap(imgBitmap);
         }
         else {
             Uri imgUri = Uri.parse(picturesData.get(i).getImgUriStr());
+            Glide.with(mContext).load(imgUri).into(myViewHolder.picture);
+            /*
             try{
                 imgBitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), imgUri);
                 myViewHolder.picture.setImageBitmap(imgBitmap);
-            }catch(IOException e) {e.printStackTrace();}
+            }catch(IOException e) {e.printStackTrace();}*/
         }
 
         myViewHolder.picture.setOnClickListener(new View.OnClickListener() {

@@ -46,8 +46,6 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
 
     }
 
-
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
