@@ -34,8 +34,7 @@ public class Picture implements Serializable {
     }
 
 
-    public Picture(Bitmap imgBitmap, Uri imgUri, int album_id) {
-        this.imgBitmap = imgBitmap;
+    public Picture(Uri imgUri, int album_id) {
         this.imgUri = imgUri;
         this.imgUriStr = imgUri.toString();
         this.album_id = album_id;

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.android.dbManager.DatabaseHelper;
 import com.example.android.javaBeans.Album;
 
@@ -94,10 +95,7 @@ public class Album_Activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 101 && resultCode == RESULT_OK &&data != null) {
             imgUri = data.getData();
-            try{
-                imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
-                mAdapter.addPicture(imgBitmap, imgUri, album.getId());
-            }catch(IOException e) {e.printStackTrace();}
+            mAdapter.addPicture(imgUri, album.getId());
         }
     }
 }

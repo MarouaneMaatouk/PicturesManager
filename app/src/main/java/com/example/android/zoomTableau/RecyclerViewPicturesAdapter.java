@@ -38,13 +38,12 @@ public class RecyclerViewPicturesAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
 
-    public void addPicture(Bitmap imgBitmap, Uri uri, int album_id) {
+    public void addPicture(Uri uri, int album_id) {
 
-        Picture newPicture = new Picture(imgBitmap,uri,album_id );
+        Picture newPicture = new Picture(uri,album_id );
         mDatabaseHelper.addNewPicture(newPicture);
         newPicture.setId(mDatabaseHelper.getLastPictureId());
         picturesData.add(newPicture);
-
     }
 
     @NonNull
@@ -59,20 +58,13 @@ public class RecyclerViewPicturesAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int i) {
-        Bitmap imgBitmap = picturesData.get(i).getImgBitmap();
-        if(imgBitmap != null) {
-            Glide.with(mContext).load(imgBitmap).into(myViewHolder.picture);
-            //myViewHolder.picture.setImageBitmap(imgBitmap);
-        }
-        else {
-            Uri imgUri = Uri.parse(picturesData.get(i).getImgUriStr());
-            Glide.with(mContext).load(imgUri).into(myViewHolder.picture);
-            /*
-            try{
-                imgBitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), imgUri);
-                myViewHolder.picture.setImageBitmap(imgBitmap);
-            }catch(IOException e) {e.printStackTrace();}*/
-        }
+        Uri imgUri = picturesData.get(i).getImgUri();
+
+        if(imgUri == null)
+            imgUri = Uri.parse(picturesData.get(i).getImgUriStr());
+
+        Glide.with(mContext).load(imgUri).into(myViewHolder.picture);
+
 
         myViewHolder.picture.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -32,7 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Picture_Activity extends AppCompatActivity {
+public class Picture_Activity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+
     Picture img;
     Album album;
     ImageView imgView;
@@ -41,8 +42,8 @@ public class Picture_Activity extends AppCompatActivity {
 
     DatabaseHelper mDatabaseHelper;
 
-    TTS mTTs;
-
+    static TextToSpeech mTTs;
+    static boolean mTTsLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class Picture_Activity extends AppCompatActivity {
             imgView.setImageBitmap(imgBitmap);
         }catch(IOException e) {e.printStackTrace();}
 
-        mTTs = TTS.getTTSinstance(this);
+        if(!mTTsLoaded) mTTs = new TextToSpeech(getApplicationContext(), this);
 
         Picture_Activity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
@@ -78,14 +79,14 @@ public class Picture_Activity extends AppCompatActivity {
         Intent intent = new Intent(this, Album_Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         this.startActivity(intent);
-        return;
     }
-    /*
-    public void initmTTs() {
 
-        mTTs = new TextToSpeech(this , new TextToSpeech.OnInitListener() {
+
+    @Override
+    public void onInit(final int i) {
+        new Thread(new Runnable() {
             @Override
-            public void onInit(int i) {
+            public void run() {
                 if(i == TextToSpeech.SUCCESS) {
                     int result = mTTs.setLanguage(Locale.FRENCH);
                     if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -102,9 +103,8 @@ public class Picture_Activity extends AppCompatActivity {
                     mTTsLoaded = false;
                 }
             }
-        });
-
-    }*/
+        }).start();
+    }
 
     public void addComment(View v) {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
@@ -137,21 +137,12 @@ public class Picture_Activity extends AppCompatActivity {
         dialogBuilder.show();
     }
 
-    public void readComment(View v) {
+    public synchronized void readComment(View v) {
+
         final String description = img.getDescription();
-        Log.d("mTTs", "null ?"+ (mTTs == null));
-        mTTs.readText(description);
+        if(description == null) mTTs.speak("Aucune description disponible", TextToSpeech.QUEUE_FLUSH, null);
+        else mTTs.speak(description, TextToSpeech.QUEUE_FLUSH, null);
 
-        /*
-
-        if(mTTsLoaded) {
-            if(description == null) Picture_Activity.mTTs.speak("Aucune description disponible", TextToSpeech.QUEUE_FLUSH, null);
-            else Picture_Activity.mTTs.speak(description, TextToSpeech.QUEUE_FLUSH, null);
-            Log.d("mTTs", "Reading description: " + description + " " + (mTTs == null));
-
-            while(mTTs.isSpeaking());
-
-        }*/
     }
 
     public void removePicture(View v) {
@@ -162,7 +153,7 @@ public class Picture_Activity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    //Equalization of the histogram
+    //histogram's equalization
     public void enhanceQuality(View v) {
 
         Mat rgba = new Mat();
