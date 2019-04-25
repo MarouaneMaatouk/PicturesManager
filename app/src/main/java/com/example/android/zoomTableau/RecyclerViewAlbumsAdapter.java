@@ -38,7 +38,7 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
 
         this.mDatabaseHelper = new DatabaseHelper(mContext);
 
-        albumsData.add(new Album(R.drawable.add, "add"));
+        albumsData.add(new Album(R.drawable.add, "ajouter"));
 
         //Load the albums from the db
         mDatabaseHelper = new DatabaseHelper(mContext);
@@ -69,7 +69,7 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
                 if(i == 0) {
                     // Creating the popup input for taking new albums names
                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle("Album name: ");
+                    builder.setTitle("Nom du nouveau album: ");
 
                     final EditText input = new EditText(mContext);
 
@@ -94,7 +94,7 @@ public class RecyclerViewAlbumsAdapter extends RecyclerView.Adapter<RecyclerView
                             Toast.makeText(mContext,popup_Text + " est crée !",Toast.LENGTH_LONG).show();
                         }
                     });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

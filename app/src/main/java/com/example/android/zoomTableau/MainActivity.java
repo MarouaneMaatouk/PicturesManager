@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity  {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                 MainActivity.this);
         // Setting Dialog Title
-        alertDialog.setTitle("Leave application?");
+        alertDialog.setTitle("Quitter l'application ?");
         // Setting Dialog Message
-        alertDialog.setMessage("Are you sure you want to leave the application?");
+        alertDialog.setMessage("Confirmer votre choix");
         // Setting Icon to Dialog
         alertDialog.setIcon(R.drawable.background_icon);
         // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES",
+        alertDialog.setPositiveButton("Quitter",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity  {
                     }
                 });
         // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO",
+        alertDialog.setNegativeButton("Annuler",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -72,56 +72,5 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-/*
-    public void openGallery(View v) {
-        Intent myIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-        startActivityForResult(myIntent,100);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100 && resultCode == RESULT_OK &&data != null) {
-            imgUri = data.getData();
-            try{
-                imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
-            }catch(IOException e) {e.printStackTrace();}
-            imageView.setImageBitmap(imgBitmap);
-        }
-
-    }
-
-    public void enhanceQuality(View v) {
-        Mat rgba = new Mat();
-
-        int width = imgBitmap.getWidth();
-        int height = imgBitmap.getHeight();
-        enhancedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-
-
-        Utils.bitmapToMat(imgBitmap, rgba);
-
-        List <Mat> channels = new ArrayList<Mat>();
-        Core.split(rgba,channels);
-
-        Imgproc.equalizeHist(channels.get(0), channels.get(0));
-        Imgproc.equalizeHist(channels.get(1), channels.get(1));
-        Imgproc.equalizeHist(channels.get(2), channels.get(2));
-
-        Core.merge(channels, rgba);
-
-        /* Image sharpness: cons -> slow
-        Imgproc.GaussianBlur(rgba, grayMat, new Size(0, 0), 10);
-        Core.addWeighted(rgba, 1.5, grayMat, -0.5, 0, grayMat);
-        */
-
-        //Imgproc.adaptiveThreshold(rgba, grayMat,255.0, Imgproc.ADAPTIVE_THRESH_MEAN_C,Imgproc.THRESH_BINARY ,15,40);
-        /*
-        Utils.matToBitmap(rgba, enhancedBitmap);
-
-        imageView.setImageBitmap(enhancedBitmap);
-
-    }
-    */
 }
