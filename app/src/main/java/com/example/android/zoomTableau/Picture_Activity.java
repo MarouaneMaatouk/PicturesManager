@@ -179,4 +179,36 @@ public class Picture_Activity extends AppCompatActivity implements TextToSpeech.
         //imgView.setImageBitmap(enhancedBitmap);
 
     }
+
+
+    public void share(View v) {
+        Uri imgUri = img.getImgUri();
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.putExtra(Intent.EXTRA_STREAM,imgUri);
+        shareIntent.setType("image/jpg");
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, img.getDescription());
+
+        startActivity(Intent.createChooser(shareIntent, "Partager"));
+
+
+        /*
+        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+        whatsappIntent.setType("text/plain");
+        whatsappIntent.setPackage("com.whatsapp");
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, img.getDescription());
+
+        whatsappIntent.putExtra(Intent.EXTRA_STREAM, imgUri);
+        whatsappIntent.setType("image/jpg");
+
+        whatsappIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        try {
+            this.startActivity(whatsappIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this,"Whatsapp have not been installed." , Toast.LENGTH_SHORT);
+        }*/
+    }
 }

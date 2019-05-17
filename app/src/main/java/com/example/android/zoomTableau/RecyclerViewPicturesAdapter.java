@@ -44,6 +44,7 @@ public class RecyclerViewPicturesAdapter extends RecyclerView.Adapter<RecyclerVi
         mDatabaseHelper.addNewPicture(newPicture);
         newPicture.setId(mDatabaseHelper.getLastPictureId());
         picturesData.add(newPicture);
+
     }
 
     @NonNull

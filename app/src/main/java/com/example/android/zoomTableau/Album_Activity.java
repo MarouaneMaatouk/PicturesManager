@@ -85,9 +85,26 @@ public class Album_Activity extends AppCompatActivity {
 
 
     public void openGallery(View v) {
-        Intent myIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //Intent myIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-        startActivityForResult(myIntent,101);
+        //startActivityForResult(myIntent,101);
+
+        Intent pickIntent = new Intent();
+        pickIntent.setType("image/*");
+        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
+        Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
+        chooserIntent.putExtra
+                (
+                        Intent.EXTRA_INITIAL_INTENTS,
+                        new Intent[] { takePhotoIntent }
+                );
+
+        startActivityForResult(chooserIntent, 101);
+
     }
 
     @Override

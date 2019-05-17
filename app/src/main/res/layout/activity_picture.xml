@@ -51,6 +51,21 @@
                     android:textColor="@android:color/white"
                     android:textSize="25sp" />
 
+                <ImageView
+                    android:id="@+id/share_picture"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="share"
+                    android:src="@drawable/share" />
 
             </RelativeLayout>
 
