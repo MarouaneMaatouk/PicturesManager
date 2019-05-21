@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,8 @@ public class RecyclerViewPicturesAdapter extends RecyclerView.Adapter<RecyclerVi
         newPicture.setId(mDatabaseHelper.getLastPictureId());
         picturesData.add(newPicture);
 
+        Log.i("adding picture", "picture path" + uri.toString());
+
     }
 
     @NonNull
@@ -65,7 +68,6 @@ public class RecyclerViewPicturesAdapter extends RecyclerView.Adapter<RecyclerVi
             imgUri = Uri.parse(picturesData.get(i).getImgUriStr());
 
         Glide.with(mContext).load(imgUri).into(myViewHolder.picture);
-
 
         myViewHolder.picture.setOnClickListener(new View.OnClickListener() {
             @Override

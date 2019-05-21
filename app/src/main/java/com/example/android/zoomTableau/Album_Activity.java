@@ -27,7 +27,6 @@ public class Album_Activity extends AppCompatActivity {
     TextView albumName;
 
     Uri imgUri;
-    Bitmap imgBitmap;
 
     RecyclerView myrv;
     RecyclerViewPicturesAdapter mAdapter;
@@ -80,13 +79,11 @@ public class Album_Activity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Toast.makeText(this, album.getName() + " a été suprimée", Toast.LENGTH_SHORT).show();
         this.startActivity(intent);
-
     }
 
 
     public void openGallery(View v) {
         //Intent myIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
         //startActivityForResult(myIntent,101);
 
         Intent pickIntent = new Intent();
@@ -95,7 +92,7 @@ public class Album_Activity extends AppCompatActivity {
 
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
+        String pickTitle = "Select or take a new Picture";
         Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
         chooserIntent.putExtra
                 (
@@ -113,6 +110,7 @@ public class Album_Activity extends AppCompatActivity {
         if(requestCode == 101 && resultCode == RESULT_OK &&data != null) {
             imgUri = data.getData();
             mAdapter.addPicture(imgUri, album.getId());
+            mAdapter.notifyDataSetChanged();
         }
     }
 }
